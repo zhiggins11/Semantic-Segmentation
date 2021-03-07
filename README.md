@@ -11,6 +11,9 @@ Here are some test images where the model performs well.  Each strip contains th
 
 ![test1](https://user-images.githubusercontent.com/77809548/110228807-ea01c980-7eb8-11eb-9ae4-b46b0171bee5.png)
 
+![test2](https://user-images.githubusercontent.com/77809548/110228861-70b6a680-7eb9-11eb-867e-08d333628125.png)
+
+
 ## Numerical Results
 
 The trained model, which can be loaded from `latest_model.pt` was evaluated on the test set, and gave a pixel accuracy of 0.8134 as well as the following intersection-over-union (IoU) values on each category
