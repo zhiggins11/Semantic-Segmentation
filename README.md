@@ -13,6 +13,12 @@ Here are some test images where the model performs well.  Each strip contains th
 
 ![test2](https://user-images.githubusercontent.com/77809548/110228861-70b6a680-7eb9-11eb-867e-08d333628125.png)
 
+![test3](https://user-images.githubusercontent.com/77809548/110228917-db67e200-7eb9-11eb-80e8-3110dbe007fe.png)
+
+Here are some test images where the model doesn't perform very well.  Each strip contains the actual image, groud truth labels, and model predictions, in that order.
+
+
+
 
 ## Numerical Results
 
