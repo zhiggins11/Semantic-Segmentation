@@ -32,7 +32,7 @@ Here are some test images where the model doesn't perform very well.  Each strip
 ![test4](https://user-images.githubusercontent.com/77809548/110228978-837dab00-7eba-11eb-9243-8fbd828d0651.png)
 
 
-
+Clearly, the model does not do very well on classes like 'people', 'billboard', and 'motorcycle' which only account for a small portion of the pixels in the training dataset.  I'm hoping that using dice loss (or weighted cross entropy) should fix this issue.
 
 
 
@@ -65,6 +65,7 @@ The trained model, which can be loaded from `latest_model.pt` was evaluated on t
 23. Bridge/tunnel - 0.344
 24. Vegetation - 0.756
 25. Sky - 0.942
+
 
 ## Future Work
 I'm currently working on improving the model by improving the architecture, the loss function, and the data augmentation used.  Specifically, I am implementing the [U-Net](https://arxiv.org/abs/1505.04597) architecture, and using either Dice loss or weighted cross entropy loss.  
