@@ -17,6 +17,7 @@ Here are some test images where the model performs well.  Each strip contains th
 
 Here are some test images where the model doesn't perform very well.  Each strip contains the actual image, groud truth labels, and model predictions, in that order.
 
+![test7](https://user-images.githubusercontent.com/77809548/110228949-3d284c00-7eba-11eb-8203-758f67b949a4.png)
 
 
 
