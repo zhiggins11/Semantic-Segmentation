@@ -45,4 +45,4 @@ class FCN(nn.Module):
         
         score = self.classifier(x)            
 
-        return score  # size=(N, n_class, x.H/1, x.W/1)
+        return score

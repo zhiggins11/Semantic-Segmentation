@@ -1,10 +1,12 @@
-from torch.utils.data import Dataset, DataLoader# For custom data-sets
+from torch.utils.data import Dataset, DataLoader
 import torchvision.transforms as transforms
 import numpy as np
 from PIL import Image
 import torch
 import pandas as pd
 from collections import namedtuple
+from matplotlib import colors
+import matplotlib.pyplot as plt
 
 n_class    = 27
 
@@ -46,6 +48,10 @@ labels = [
     Label(  'unlabeled'            ,  26 ,  (  0,  0,  0)  ),
 ]   
 
+cmap = colors.ListedColormap([tuple(num/255 for num in label[2]) for label in labels])
+
+
+
 class IddDataset(Dataset):
 
     def __init__(self, csv_file, n_class=n_class, transforms_=None):
@@ -53,9 +59,8 @@ class IddDataset(Dataset):
         self.n_class   = n_class
         self.mode = csv_file
         
-        # Add any transformations here
+        self.resize = transforms.Compose([transforms.Resize(256, interpolation=2), transforms.CenterCrop(256)])
         
-        # The following transformation normalizes each channel using the mean and std provided
         self.transforms = transforms.Compose([transforms.ToTensor(),
                                               transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),])
 
@@ -66,14 +71,19 @@ class IddDataset(Dataset):
         
         img_name = self.data.iloc[idx, 0]
         img = Image.open(img_name).convert('RGB')
+        
+        img = self.resize(img)
+        
         label_name = self.data.iloc[idx, 1]
         label = Image.open(label_name)
+        label = self.resize(label)
+
         
-        img = np.asarray(img) / 255. # scaling [0-255] values to [0-1]
+        img = np.asarray(img) / 255
         label = np.asarray(label)
         
-        img = self.transforms(img).float() # Normalization
-        label = torch.from_numpy(label.copy()).long() # convert to tensor
+        img = self.transforms(img).float() 
+        label = torch.from_numpy(label.copy()).long()
 
         # create one-hot encoding
         h, w = label.shape
