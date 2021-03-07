@@ -22,11 +22,12 @@ test_loader = DataLoader(dataset=test_dataset, batch_size= 32, num_workers= 0, s
 
 def init_weights(m):
     if isinstance(m, nn.Conv2d) or isinstance(m, nn.ConvTranspose2d):
-        torch.nn.init.xavier_uniform(m.weight.data)
-        torch.nn.init.xavier_uniform(m.bias.data)        
+        torch.nn.init.xavier_uniform_(m.weight.data)
+        torch.nn.init.xavier_uniform_(m.bias.data)        
 
-epochs = 30        
-criterion = nn.CrossEntropyLoss().to(device)
+epochs = 30
+weights = torch.load('weights.pt')
+criterion = nn.CrossEntropyLoss(weights).to(device)
 fcn_model = FCN(n_class=n_class).to(device)
 fcn_model.apply(init_weights)
 
