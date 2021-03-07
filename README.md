@@ -9,7 +9,7 @@ This project has a basic fully convolutional neural network that can be used for
 
 Here are some test images where the model performs well.  Each strip contains the actual image, ground truth labels for that image, and model predictions, in that order.
 
-![](./TesImages/test1.png)
+![test1](https://user-images.githubusercontent.com/77809548/110228807-ea01c980-7eb8-11eb-9ae4-b46b0171bee5.png)
 
 ## Numerical Results
 
