@@ -5,6 +5,16 @@ This is work that I did as part of a group project (with Lingxi Li, Yejun Li, Ji
 
 This project has a basic fully convolutional neural network that can be used for semantic segmentation.  It uses a subset of the India Driving Dataset to train, validate, and test the models.
 
+
+## Files
+
+`basic_fcn.py` contains the class for the fully convolutional network
+`dataloader.py ` contains code for loading training, validation, and test datasets.
+`get_weights.py` contains code for computing weights for each of the classes.  These weights can be used to train a model using weighted cross entropy loss.
+`latest_model.pt` contains a trained model which can be used to make predictions on test images
+`starter.py` contains code needed to train a model.  If you would like to run this, you'll need to download (some portion of) the India Driving Dataset and save links to each of the training, validation, and test images to files `train.csv`, `val.csv`, and `test.csv`, respectively, in your working directory.
+`utils.py` contains functions used to compute pixel accuracy and IoU for each category
+
 ## Visual Results
 
 Here are some test images where the model performs well.  Each strip contains the actual image, ground truth labels for that image, and model predictions, in that order.
@@ -18,6 +28,8 @@ Here are some test images where the model performs well.  Each strip contains th
 Here are some test images where the model doesn't perform very well.  Each strip contains the actual image, groud truth labels, and model predictions, in that order.
 
 ![test7](https://user-images.githubusercontent.com/77809548/110228949-3d284c00-7eba-11eb-8203-758f67b949a4.png)
+
+
 
 
 
@@ -51,3 +63,5 @@ The trained model, which can be loaded from `latest_model.pt` was evaluated on t
 24. Vegetation - 0.756
 25. Sky - 0.942
 
+## Future Work
+I'm currently working on improving the model by improving the architecture, the loss function, and the data augmentation used.  Specifically, I am implementing the [U-Net](https://arxiv.org/abs/1505.04597) architecture, and using either Dice loss or weighted cross entropy loss.  
