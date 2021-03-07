@@ -38,7 +38,7 @@ Clearly, the model does not do very well on classes like 'people', 'billboard', 
 
 ## Numerical Results
 
-The trained model, which can be loaded from `latest_model.pt` was evaluated on the test set, and gave a pixel accuracy of 0.8134 as well as the following intersection-over-union (IoU) values on each category
+The trained model, which can be loaded from `latest_model.pt` was evaluated on the test set, and gave a pixel accuracy of 0.8134 as well as the following intersection-over-union (IoU) values on each category\
 0. Road - 0.903
 1. Drivable fallback - 0.416
 2. Sidewalk - 0.101
