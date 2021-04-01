@@ -23,10 +23,10 @@ for iter, (X, tar, Y) in enumerate(train_loader):
     counts += torch.mean(tar, (0,2,3))
     if iter % 100 == 0:
         print(iter)
-average = torch.mean(counts)
-weights = average * counts.pow_(-1)
+#average = torch.mean(counts)
+#weights = average * counts.pow_(-1)
 
-torch.save(weights, 'weights.pt')
+torch.save(counts, 'counts.pt')
 
 #Might want to weight unlabeled class differently?
 
