@@ -1,4 +1,4 @@
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader# For custom data-sets
 import torchvision.transforms as transforms
 import numpy as np
 from PIL import Image
@@ -7,6 +7,7 @@ import pandas as pd
 from collections import namedtuple
 from matplotlib import colors
 import matplotlib.pyplot as plt
+import random
 
 n_class    = 27
 
@@ -50,19 +51,52 @@ labels = [
 
 cmap = colors.ListedColormap([tuple(num/255 for num in label[2]) for label in labels])
 
+class AddGaussianNoise(object):
+    def __init__(self, mean=0, std=1, prob = 0.5):
+        self.std = std
+        self.mean = mean
+        self.prob = prob
+        
+    def __call__(self, tensor):
+        if random.random() < self.prob :
+            return tensor + torch.randn(tensor.size()) * self.std + self.mean
+        return tensor
+    
+class RandomHorizontalFlip(object):
+    def __init__(self, prob = 0.5):
+        self.prob = prob
+        
+    def __call__(self, img, label):
+        if random.random() < self.prob :
+            img, label =  transforms.functional.hflip(img), transforms.functional.hflip(label)
+        return img, label
+    
+"""class RandomHorizontalCrop(object):
+    def __init__(self, prob = 0.25):
+        self.prob = prob
+        
+    def __call__(self, pic, label):
+        if random.random() < self.prob :
+            width = pic.size(-1)
+            #NEED TO FINISH THIS
+            """
 
 
 class IddDataset(Dataset):
 
-    def __init__(self, csv_file, n_class=n_class, transforms_=None):
+    def __init__(self, csv_file, n_class=n_class, transforms_=None, mode = 'test'):
         self.data      = pd.read_csv(csv_file)
         self.n_class   = n_class
-        self.mode = csv_file
+        self.mode = mode
         
         self.resize = transforms.Compose([transforms.Resize(256, interpolation=2), transforms.CenterCrop(256)])
         
-        self.transforms = transforms.Compose([transforms.ToTensor(),
-                                              transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),])
+        self.random_flip = RandomHorizontalFlip(0.5)
+        
+        #self.add_noise = AddGaussianNoise(0, 0.05, 0.5)
+        
+        self.normalize = transforms.Compose([transforms.ToTensor(),
+                                             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
     def __len__(self):
         return len(self.data)
@@ -70,20 +104,26 @@ class IddDataset(Dataset):
     def __getitem__(self, idx):
         
         img_name = self.data.iloc[idx, 0]
-        img = Image.open(img_name).convert('RGB')
-        
-        img = self.resize(img)
-        
         label_name = self.data.iloc[idx, 1]
-        label = Image.open(label_name)
-        label = self.resize(label)
-
         
-        img = np.asarray(img) / 255
+        img = Image.open(img_name).convert('RGB')
+        label = Image.open(label_name)
+        
+        img, label = self.resize(img), self.resize(label)
+        
+        if self.mode == 'train':
+            img, label = self.random_flip(img, label)
+        
+        #label2 = (np.asarray(cmap(label)))*255
+        #print(label2.shape)
+        #PIL_image = Image.fromarray(label2.astype('uint8'))
+        #display(PIL_image)
+        
+        img = np.asarray(img) / 255. # scaling [0-255] values to [0-1]
         label = np.asarray(label)
         
-        img = self.transforms(img).float() 
-        label = torch.from_numpy(label.copy()).long()
+        img = self.normalize(img).float() # Normalization
+        label = torch.from_numpy(label.copy()).long() # convert to tensor
 
         # create one-hot encoding
         h, w = label.shape
