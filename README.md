@@ -52,8 +52,8 @@ A trained model, which can be loaded from `latest_model.pt` was evaluated on the
 `dataloader.py ` contains code for loading training, validation, and test datasets.\
 `latest_model.pt` contains a trained model which can be used to make predictions on test images.\
 `starter.py` contains code needed to train a model.  If you would like to run this, you'll need to download (some portion of) the India Driving Dataset and save links to each of the training, validation, and test images to the files `train.csv`, `val.csv`, and `test.csv`, respectively, in your working directory.\
-`utils.py` contains functions used to compute pixel accuracy and IoU for each category, as well as a DiceLoss class, which can be used to train a model using dice loss rather than cross entropy loss.
-`get_weights.py` contains code for computing weights for each of the classes.  These weights can be used to train a model using weighted cross entropy loss.\
+`utils.py` contains functions used to compute pixel accuracy and IoU for each category, as well as a DiceLoss class, which can be used to train a model using dice loss rather than cross entropy loss.\
+`get_weights.py` contains code for computing weights for each of the classes.  These weights can be used to train a model using weighted cross entropy loss.
 
 
 ## Future Work
